@@ -1,0 +1,240 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model availability_request {
+  id          Int       @id(map: "PK_52c7a6f3128b85b7edf4abe9f74") @default(autoincrement())
+  pid         String    @db.VarChar
+  timeobj     String?   @db.VarChar
+  blockeddate DateTime? @db.Timestamp(6)
+  blockstatus Boolean   @default(true)
+  created_at  DateTime  @default(now()) @db.Timestamp(6)
+}
+
+model customer {
+  cid             String            @id(map: "PK_3c1fd3f3a500abb9fdaf3c7f07f") @db.VarChar
+  name            String?           @db.VarChar
+  email           String?           @db.VarChar
+  phone           String            @db.VarChar
+  qid             String?           @db.VarChar
+  imgurl          String?           @db.VarChar
+  created_at      DateTime          @default(now()) @db.Timestamp(6)
+  service_request service_request[]
+  transactions    transactions[]
+}
+
+model my_car_images {
+  id         Int      @id(map: "PK_64bcbca02eaa724a8f0ea0c29fd") @default(autoincrement())
+  cid        String   @db.VarChar
+  srid       String   @db.VarChar
+  car_number String?  @db.VarChar
+  url        String   @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model my_cars {
+  id           Int      @id(map: "PK_b8d02245af0a5c196369340556d") @default(autoincrement())
+  car_number   String   @db.VarChar
+  manufacturer String?  @db.VarChar
+  model        String?  @db.VarChar
+  fuel_type    String?  @db.VarChar
+  cid          String   @db.VarChar
+  created_at   DateTime @default(now()) @db.Timestamp(6)
+}
+
+model partner {
+  pid           String   @id(map: "PK_000087fb32a6eed27282b335cec") @db.VarChar
+  name          String?  @db.VarChar
+  workshop_name String?  @db.VarChar
+  email         String?  @db.VarChar
+  phone         String   @db.VarChar
+  address       String?  @db.VarChar
+  city          String?  @db.VarChar
+  zip           Decimal? @db.Decimal
+  s_time        String?  @db.VarChar
+  e_time        String?  @db.VarChar
+  s_time_mer    String?  @db.VarChar
+  e_time_mer    String?  @db.VarChar
+  s_time_str    String?  @db.VarChar
+  e_time_str    String?  @db.VarChar
+  days          Json?
+  c_days        String?  @db.VarChar
+  shop_img      String?  @db.VarChar
+  shop_rating   String?  @db.VarChar
+  created_at    DateTime @default(now()) @db.Timestamp(6)
+  updated_at    DateTime @default(now()) @db.Timestamp(6)
+}
+
+model partner_image {
+  id         Int      @id(map: "PK_2d8eac288dd091eb8fabacacb45") @default(autoincrement())
+  pid        String   @db.VarChar
+  url        String   @db.VarChar
+  type       String?  @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model profile_image {
+  id         Int      @id(map: "PK_4a0c83016e1f1dc03ea2fcab948") @default(autoincrement())
+  cid        String   @db.VarChar
+  url        String   @db.VarChar
+  type       String?  @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model service_details {
+  sid           String                        @id(map: "PK_e394cd7df2e48cebbdb6928b127") @db.VarChar
+  pid           String                        @db.VarChar
+  category      service_details_category_enum
+  s_name        String                        @db.VarChar
+  s_description String                        @db.VarChar
+  s_time        Decimal?                      @db.Decimal
+  s_price       Decimal?                      @db.Decimal
+  diff_packages Boolean?
+  s_packages    Json?
+  created_at    DateTime                      @default(now()) @db.Timestamp(6)
+  updated_at    DateTime                      @default(now()) @db.Timestamp(6)
+}
+
+model service_image {
+  id         Int      @id(map: "PK_25c780834f7ebf269233974cc8d") @default(autoincrement())
+  sid        String   @db.VarChar
+  pid        String   @db.VarChar
+  pa_id      String?  @db.VarChar
+  url        String   @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model service_package {
+  pa_id         String   @id(map: "PK_5565f4d713c3d38283134314454") @db.VarChar
+  sid           String   @db.VarChar
+  pid           String   @db.VarChar
+  p_name        String   @db.VarChar
+  p_description String   @db.VarChar
+  p_time        Decimal  @db.Decimal
+  p_price       String   @db.VarChar
+  pack_type     String?  @db.VarChar
+  offers        String   @db.VarChar
+  created_at    DateTime @default(now()) @db.Timestamp(6)
+  updated_at    DateTime @default(now()) @db.Timestamp(6)
+}
+
+model service_package_image {
+  id         Int      @id(map: "PK_b11eadf863a8214bbc81e87af32") @default(autoincrement())
+  sid        String   @db.VarChar
+  pid        Decimal  @db.Decimal
+  url        String   @db.VarChar
+  type       String   @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model service_rating {
+  srid         String   @db.VarChar
+  sid          String   @db.VarChar
+  r_name       String   @db.VarChar
+  dp           String?  @db.VarChar
+  rate         String   @db.VarChar
+  r_comment    String?  @db.VarChar
+  commented_on DateTime @default(now()) @db.Timestamp(6)
+
+  @@id([srid, sid], map: "PK_58706dda3acfb7f1fe06db4c24d")
+}
+
+model service_request {
+  srid                   String                              @id(map: "PK_02161d9e9dd72f69a9fafe606d8") @db.VarChar
+  cid                    String                              @db.VarChar
+  service_id             String                              @db.VarChar
+  package_id             String?                             @db.VarChar
+  groupid                String?                             @db.VarChar
+  manufacturer           String                              @db.VarChar
+  model                  String                              @db.VarChar
+  fuel_type              String                              @db.VarChar
+  v_id                   String                              @db.VarChar
+  r_title                String                              @db.VarChar
+  r_description          String                              @db.VarChar
+  r_sent_to              String                              @db.VarChar
+  quote_sent             Boolean                             @default(false)
+  quote_rejected_partner Boolean                             @default(false)
+  quote_category         String?                             @db.VarChar
+  quote_details          String?                             @db.VarChar
+  quote_price            String?                             @db.VarChar
+  quote_status           service_request_quote_status_enum   @default(under_review)
+  s_date                 DateTime?                           @default(now()) @db.Timestamp(6)
+  s_date_num             String?                             @db.VarChar
+  slot_time              String?                             @db.VarChar
+  service_status         service_request_service_status_enum @default(not_initiated)
+  bill_details           String?                             @db.VarChar
+  price                  Decimal?                            @db.Decimal
+  payment_status         Boolean                             @default(false)
+  service_req_live       Boolean                             @default(true)
+  created_at             DateTime                            @default(now()) @db.Timestamp(6)
+  updated_at             DateTime                            @default(now()) @db.Timestamp(6)
+  customer               customer                            @relation(fields: [cid], references: [cid], onDelete: NoAction, onUpdate: NoAction, map: "FK_d85a2ff2ab7b289c94b48ea0fb5")
+  transactions           transactions[]
+}
+
+model transactions {
+  tid                String                   @id(map: "PK_b588e5596365a5dec6aa6f8a572") @db.VarChar
+  serviceRequestSrid String                   @db.VarChar
+  customerCid        String                   @db.VarChar
+  amount             String                   @db.VarChar
+  status             transactions_status_enum @default(INITIATED)
+  created_at         DateTime                 @default(now()) @db.Timestamp(6)
+  updated_at         DateTime                 @default(now()) @db.Timestamp(6)
+  service_request    service_request          @relation(fields: [serviceRequestSrid], references: [srid], onDelete: NoAction, onUpdate: NoAction, map: "FK_09a77be2ef3e0df1edd91880c9f")
+  customer           customer                 @relation(fields: [customerCid], references: [cid], onDelete: NoAction, onUpdate: NoAction, map: "FK_216d3716408b9d3f0a478c1dc95")
+}
+
+enum service_details_category_enum {
+  car_washing
+  oil_change
+  car_servicing
+  tire_change
+  dead_battery
+  towing
+  electric_vehicles
+  car_breakdown
+}
+
+enum service_request_quote_status_enum {
+  under_review
+  rejected
+  accepted
+}
+
+enum service_request_service_status_enum {
+  not_initiated
+  initiated
+  yet_to_start
+  car_drop
+  car_inspection
+  invoice_sent
+  payment_pending
+  payment_complete
+  payment_fail
+  work_pending
+  in_progress
+  car_delivered
+  completed
+  rejected
+}
+
+enum transactions_status_enum {
+  INITIATED
+  PENDING
+  SUCCESS
+  FAILED
+}

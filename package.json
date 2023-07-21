@@ -1,0 +1,23 @@
+{
+  "name": "prisma-read-database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^10.2.2",
+    "@types/node": "^20.3.2",
+    "prisma": "^4.16.1",
+    "prisma-erd-generator": "^1.6.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.16.1"
+  }
+}
